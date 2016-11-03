@@ -186,9 +186,9 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>632</y>
+         <y>624</y>
          <width>501</width>
-         <height>33</height>
+         <height>41</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_5">
@@ -206,7 +206,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="txt_outputFolder">
+         <widget class="QLineEdit" name="txtOutputFolder">
           <property name="minimumSize">
            <size>
             <width>0</width>
@@ -377,7 +377,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QDialogButtonBox" name="btn_box">
+    <widget class="QDialogButtonBox" name="btnBox">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -405,108 +405,11 @@
   <tabstop>txtValue2</tabstop>
   <tabstop>txtValue3</tabstop>
   <tabstop>txtValue4</tabstop>
-  <tabstop>txt_outputFolder</tabstop>
+  <tabstop>txtOutputFolder</tabstop>
   <tabstop>btnBrowseOutputFolder</tabstop>
   <tabstop>chkMoveFiles</tabstop>
   <tabstop>tabWidget</tabstop>
  </tabstops>
  <resources/>
- <connections>
-  <connection>
-   <sender>btn_box</sender>
-   <signal>accepted()</signal>
-   <receiver>ProjectBuilderDialogBase</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>26</x>
-     <y>779</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btn_box</sender>
-   <signal>rejected()</signal>
-   <receiver>ProjectBuilderDialogBase</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>26</x>
-     <y>779</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btnBrowseFile1</sender>
-   <signal>clicked()</signal>
-   <receiver>btnBrowseFile1</receiver>
-   <slot>click()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>458</x>
-     <y>45</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>458</x>
-     <y>45</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btnBrowseFile2</sender>
-   <signal>clicked()</signal>
-   <receiver>btnBrowseFile2</receiver>
-   <slot>click()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>499</x>
-     <y>91</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>499</x>
-     <y>91</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btnBrowseFile3</sender>
-   <signal>clicked()</signal>
-   <receiver>btnBrowseFile3</receiver>
-   <slot>click()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>453</x>
-     <y>124</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>453</x>
-     <y>124</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btnBrowseOutputFolder</sender>
-   <signal>clicked()</signal>
-   <receiver>btnBrowseOutputFolder</receiver>
-   <slot>click()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>489</x>
-     <y>691</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>489</x>
-     <y>691</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>
