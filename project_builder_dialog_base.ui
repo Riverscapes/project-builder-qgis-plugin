@@ -33,14 +33,14 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>80</y>
+         <y>180</y>
          <width>501</width>
          <height>41</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_3">
         <item>
-         <widget class="QLabel" name="label_3">
+         <widget class="QLabel" name="labelEOut">
           <property name="minimumSize">
            <size>
             <width>0</width>
@@ -54,12 +54,12 @@
            </size>
           </property>
           <property name="text">
-           <string>File3</string>
+           <string>Edited Output</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="txtFile3">
+         <widget class="QLineEdit" name="txtEOut">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -81,7 +81,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="btnBrowseFile3">
+         <widget class="QPushButton" name="btnBrowseEOut">
           <property name="minimumSize">
            <size>
             <width>0</width>
@@ -118,7 +118,7 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>150</y>
+         <y>420</y>
          <width>501</width>
          <height>121</height>
         </rect>
@@ -129,22 +129,42 @@
           <item>
            <layout class="QFormLayout" name="formLayout">
             <item row="0" column="0">
-             <widget class="QLabel" name="label_5">
+             <widget class="QLabel" name="labelSmBuf">
               <property name="text">
-               <string>Value1</string>
+               <string>Small Buffer</string>
               </property>
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QLineEdit" name="txtValue1"/>
+             <widget class="QLineEdit" name="txtSmBuf"/>
             </item>
             <item row="1" column="1">
-             <widget class="QLineEdit" name="txtValue3"/>
+             <widget class="QLineEdit" name="txtLgBuf"/>
             </item>
             <item row="1" column="0">
-             <widget class="QLabel" name="label_6">
+             <widget class="QLabel" name="labelLgBuf">
               <property name="text">
-               <string>Value3</string>
+               <string>Large Buffer</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QLineEdit" name="txtHighDA"/>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="labelHighDA">
+              <property name="text">
+               <string>High Drainage Threshold</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QLineEdit" name="txtMedSlope"/>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="labelMedSlope">
+              <property name="text">
+               <string>Medium Slope Threshold</string>
               </property>
              </widget>
             </item>
@@ -157,22 +177,42 @@
           <item>
            <layout class="QFormLayout" name="formLayout_2">
             <item row="0" column="0">
-             <widget class="QLabel" name="label_4">
+             <widget class="QLabel" name="labelMedBuf">
               <property name="text">
-               <string>Value2</string>
+               <string>Medium Buffer</string>
               </property>
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QLineEdit" name="txtValue2"/>
+             <widget class="QLineEdit" name="txtMedBuf"/>
             </item>
             <item row="1" column="1">
-             <widget class="QLineEdit" name="txtValue4"/>
+             <widget class="QLineEdit" name="txtLowDA"/>
             </item>
             <item row="1" column="0">
-             <widget class="QLabel" name="label_7">
+             <widget class="QLabel" name="labelLowDA">
               <property name="text">
-               <string>Value4</string>
+               <string>Low Drainage Threshold</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QLineEdit" name="txtLgSlope"/>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="labelLgSlope">
+              <property name="text">
+               <string>Large Slope Threshold</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QLineEdit" name="txtSmSlope"/>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="labelSmSlope">
+              <property name="text">
+               <string>Small Slope Threshold</string>
               </property>
              </widget>
             </item>
@@ -193,7 +233,7 @@
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_5">
         <item>
-         <widget class="QLabel" name="label_8">
+         <widget class="QLabel" name="labelOutputFolder">
           <property name="minimumSize">
            <size>
             <width>0</width>
@@ -240,14 +280,14 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>0</y>
+         <y>100</y>
          <width>501</width>
          <height>41</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
-         <widget class="QLabel" name="label_2">
+         <widget class="QLabel" name="labelDEM">
           <property name="minimumSize">
            <size>
             <width>0</width>
@@ -255,12 +295,12 @@
            </size>
           </property>
           <property name="text">
-           <string>File1</string>
+           <string>DEM</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="txtFile1">
+         <widget class="QLineEdit" name="txtDEM">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -282,7 +322,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="btnBrowseFile1">
+         <widget class="QPushButton" name="btnBrowseDEM">
           <property name="minimumSize">
            <size>
             <width>0</width>
@@ -300,14 +340,14 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>40</y>
+         <y>140</y>
          <width>501</width>
          <height>41</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
-         <widget class="QLabel" name="label">
+         <widget class="QLabel" name="labelNetwork">
           <property name="minimumSize">
            <size>
             <width>0</width>
@@ -321,12 +361,12 @@
            </size>
           </property>
           <property name="text">
-           <string>File2</string>
+           <string>Network</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="txtFile2">
+         <widget class="QLineEdit" name="txtNetwork">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -348,7 +388,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="btnBrowseFile2">
+         <widget class="QPushButton" name="btnBrowseNetwork">
           <property name="minimumSize">
            <size>
             <width>0</width>
@@ -368,6 +408,265 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="horizontalLayoutWidget_6">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>220</y>
+         <width>501</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout_7">
+        <item>
+         <widget class="QLabel" name="labelFA">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Flow Accumulation</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="txtFA">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnBrowseFA">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Browse...</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="horizontalLayoutWidget_7">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>260</y>
+         <width>501</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout_8">
+        <item>
+         <widget class="QLabel" name="labelSlope">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Slope</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="txtSlope">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnBrowseSlope">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Browse...</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="horizontalLayoutWidget_8">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>300</y>
+         <width>501</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout_9">
+        <item>
+         <widget class="QLabel" name="labelUOut">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Unedited Output</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="txtUOut">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnBrowseUOut">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Browse...</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="horizontalLayoutWidget_9">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>501</width>
+         <height>43</height>
+        </rect>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout_10">
+        <item>
+         <widget class="QLabel" name="labelHUCID">
+          <property name="text">
+           <string>Watershed HUC ID</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="txtHUCID"/>
+        </item>
+        <item>
+         <widget class="QLabel" name="labelHUCName">
+          <property name="text">
+           <string>Watershed HUC Name</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="txtHUCName"/>
+        </item>
+       </layout>
+      </widget>
+      <zorder>horizontalLayoutWidget_3</zorder>
+      <zorder>chkMoveFiles</zorder>
+      <zorder>horizontalLayoutWidget_4</zorder>
+      <zorder>horizontalLayoutWidget_5</zorder>
+      <zorder>horizontalLayoutWidget_2</zorder>
+      <zorder>horizontalLayoutWidget</zorder>
+      <zorder>horizontalLayoutWidget_6</zorder>
+      <zorder>horizontalLayoutWidget_7</zorder>
+      <zorder>horizontalLayoutWidget_8</zorder>
+      <zorder>labelUOut</zorder>
+      <zorder>horizontalLayoutWidget_9</zorder>
      </widget>
      <widget class="QWidget" name="tabTool2">
       <attribute name="title">
@@ -395,16 +694,16 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>txtFile1</tabstop>
-  <tabstop>btnBrowseFile1</tabstop>
-  <tabstop>txtFile2</tabstop>
-  <tabstop>btnBrowseFile2</tabstop>
-  <tabstop>txtFile3</tabstop>
-  <tabstop>btnBrowseFile3</tabstop>
-  <tabstop>txtValue1</tabstop>
-  <tabstop>txtValue2</tabstop>
-  <tabstop>txtValue3</tabstop>
-  <tabstop>txtValue4</tabstop>
+  <tabstop>txtDEM</tabstop>
+  <tabstop>btnBrowseDEM</tabstop>
+  <tabstop>txtNetwork</tabstop>
+  <tabstop>btnBrowseNetwork</tabstop>
+  <tabstop>txtEOut</tabstop>
+  <tabstop>btnBrowseEOut</tabstop>
+  <tabstop>txtSmBuf</tabstop>
+  <tabstop>txtMedBuf</tabstop>
+  <tabstop>txtLgBuf</tabstop>
+  <tabstop>txtLowDA</tabstop>
   <tabstop>txtOutputFolder</tabstop>
   <tabstop>btnBrowseOutputFolder</tabstop>
   <tabstop>chkMoveFiles</tabstop>

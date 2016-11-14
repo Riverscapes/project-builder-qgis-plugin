@@ -42,7 +42,7 @@ class ProjectXML:
         node.set("Name", name)
         node.text = str(value)
 
-    def addInput(self, itype, name, parentNode, path='', iid='', iguid='', basepath='', inputref=''):
+    def addInput(self, itype, name, parentNode, path='', iid='', iguid='', basepath='', fileref=''):
         if parentNode == self.project:
             typeNode = ET.SubElement(self.Inputs, itype)
             if iid is not '':
@@ -57,9 +57,9 @@ class ProjectXML:
             if basepath is not '':
                 basepathNode = ET.SubElement(typeNode, "BasePath")
                 basepathNode.text = str(basepath)
-            if inputref is not '':
-                filerefNode = ET.SubElement(typeNode, "InputRef")
-                filerefNode.text = str(inputref)
+            if fileref is not '':
+                filerefNode = ET.SubElement(typeNode, "fileRef")
+                filerefNode.text = str(fileref)
 
         elif parentNode == self.VBETrealizations[0]:
             inputsNode = parentNode.find("Inputs")
@@ -78,9 +78,9 @@ class ProjectXML:
             if basepath is not '':
                 basepathNode = ET.SubElement(typeNode, "BasePath")
                 basepathNode.text = str(basepath)
-            if inputref is not '':
-                filerefNode = ET.SubElement(typeNode, "InputRef")
-                filerefNode.text = str(inputref)
+            if fileref is not '':
+                filerefNode = ET.SubElement(typeNode, "fileRef")
+                filerefNode.text = str(fileref)
 
     def addVBETRealization(self, name, id):
         node = ET.SubElement(self.realizations, "VBET")
