@@ -32,6 +32,7 @@ class ProjectXML:
         self.Inputs = ET.SubElement(self.project, "Inputs")
         self.realizations = ET.SubElement(self.project, "Realizations")
         self.VBETrealizations = []
+        self.RVDrealizations = []
 
     def addMeta(self, name, value, parentNode):
         metaNode = parentNode.find("MetaData")
@@ -61,7 +62,7 @@ class ProjectXML:
                 filerefNode = ET.SubElement(typeNode, "InputRef")
                 filerefNode.text = str(inputref)
 
-        elif parentNode == self.VBETrealizations[0]:
+        else:
             inputsNode = parentNode.find("Inputs")
             if inputsNode is None:
                 inputsNode = ET.SubElement(parentNode, "Inputs")
@@ -82,14 +83,6 @@ class ProjectXML:
                 filerefNode = ET.SubElement(typeNode, "InputRef")
                 filerefNode.text = str(inputref)
 
-    def addVBETRealization(self, name, id):
-        node = ET.SubElement(self.realizations, "VBET")
-        node.set("id", str(id))
-        node.set("Guid", self.getUUID())
-        nameNode = ET.SubElement(node, "Name")
-        nameNode.text = str(name)
-        self.VBETrealizations.append(node)
-
     def addParameter(self, name, value, parentNode):
         paramNode = parentNode.find("Parameters")
         if paramNode is None:
@@ -100,27 +93,42 @@ class ProjectXML:
         node.text = str(value)
 
     def addOutput(self, aname, otype, name, path, parentNode, basepath='', fileref=''):
-        if parentNode == self.VBETrealizations[0]:
-            analysisNode = parentNode.find("Analysis")
-            if analysisNode is None:
-                analysisNode = ET.SubElement(parentNode, "Analysis")
-                ET.SubElement(analysisNode, "Name").text = str(aname)
-            outputsNode = analysisNode.find("Outputs")
-            if outputsNode is None:
-                outputsNode = ET.SubElement(analysisNode, "Outputs")
+        analysisNode = parentNode.find("Analysis")
+        if analysisNode is None:
+            analysisNode = ET.SubElement(parentNode, "Analysis")
+            ET.SubElement(analysisNode, "Name").text = str(aname)
+        outputsNode = analysisNode.find("Outputs")
+        if outputsNode is None:
+            outputsNode = ET.SubElement(analysisNode, "Outputs")
 
-            typeNode = ET.SubElement(outputsNode, otype)
-            nameNode = ET.SubElement(typeNode, "Name")
-            nameNode.text = str(name)
-            pathNode = ET.SubElement(typeNode, "Path")
-            pathNode.text = str(path)
+        typeNode = ET.SubElement(outputsNode, otype)
+        nameNode = ET.SubElement(typeNode, "Name")
+        nameNode.text = str(name)
+        pathNode = ET.SubElement(typeNode, "Path")
+        pathNode.text = str(path)
 
-            if basepath is not '':
-                basepathNode = ET.SubElement(typeNode, "BasePath")
-                basepathNode.text = str(basepath)
-            if fileref is not '':
-                filerefNode = ET.SubElement(typeNode, "fileRef")
-                filerefNode.text = str(fileref)
+        if basepath is not '':
+            basepathNode = ET.SubElement(typeNode, "BasePath")
+            basepathNode.text = str(basepath)
+        if fileref is not '':
+            filerefNode = ET.SubElement(typeNode, "fileRef")
+            filerefNode.text = str(fileref)
+
+    def addVBETRealization(self, name, id):
+        node = ET.SubElement(self.realizations, "VBET")
+        node.set("id", str(id))
+        node.set("Guid", self.getUUID())
+        nameNode = ET.SubElement(node, "Name")
+        nameNode.text = str(name)
+        self.VBETrealizations.append(node)
+
+    def addRVDRealization(self, name, id):
+        node = ET.SubElement(self.realizations, "RVD")
+        node.set("id", str(id))
+        node.set("Guid", self.getUUID())
+        nameNode = ET.SubElement(node, "Name")
+        nameNode.text = str(name)
+        self.RVDrealizations.append(node)
 
     def write(self):
         """

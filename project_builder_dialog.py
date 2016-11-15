@@ -24,7 +24,8 @@
 import os
 
 #from projectxml import ProjectXML
-from vbet import VBETproject
+from rcat.vbet import VBETproject
+from rcat.rvd import RVDproject
 from PyQt4 import QtGui, uic
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
@@ -51,12 +52,23 @@ class ProjectBuilderDialog(QtGui.QDialog, FORM_CLASS):
         self.btnBrowseFA.clicked.connect(lambda: self.file_browser(self.txtFA))
         self.btnBrowseSlope.clicked.connect(lambda: self.file_browser(self.txtSlope))
         self.btnBrowseUOut.clicked.connect(lambda: self.file_browser(self.txtUOut))
-
         self.btnBrowseOutputFolder.clicked.connect(lambda: self.folder_browser(self.txtOutputFolder))
+
+        self.btnBrowseExVeg.clicked.connect(lambda: self.file_browser(self.txtExVeg))
+        self.btnBrowseHistVeg.clicked.connect(lambda: self.file_browser(self.txtHistVeg))
+        self.btnBrowseNetwork2.clicked.connect(lambda: self.file_browser(self.txtNetwork2))
+        self.btnBrowseValley.clicked.connect(lambda: self.file_browser(self.txtValley))
+        self.btnBrowseRVD.clicked.connect(lambda: self.file_browser(self.txtRVD))
+        self.btnBrowseConversion.clicked.connect(lambda: self.file_browser(self.txtConversion))
+        self.btnBrowseLRP.clicked.connect(lambda: self.file_browser(self.txtLRP))
+        self.btnBrowseOutputFolder_2.clicked.connect(lambda: self.folder_browser(self.txtOutputFolder_2))
 
         # Handle what happens when we click OK
         self.btnBox.button(QtGui.QDialogButtonBox.Ok).clicked.connect(self.copyVBET)
         self.btnBox.button(QtGui.QDialogButtonBox.Cancel).clicked.connect(self.close)
+
+        self.btnBox_2.button(QtGui.QDialogButtonBox.Ok).clicked.connect(self.copyRVD)
+        self.btnBox_2.button(QtGui.QDialogButtonBox.Cancel).clicked.connect(self.close)
 
         print "GUI loaded and linked"
 
@@ -76,6 +88,11 @@ class ProjectBuilderDialog(QtGui.QDialog, FORM_CLASS):
                     medbuf=self.txtMedBuf.text(), lgbuf=self.txtLgBuf.text(), lowda=self.txtLowDA.text(),
                     highda=self.txtHighDA.text(), lgslope=self.txtLgSlope.text(), medslope=self.txtMedSlope.text(),
                     smslope=self.txtSmSlope.text())
+
+    def copyRVD(self):
+        RVDproject(self.txtOutputFolder_2.text(), self.txtExVeg.text(), self.txtHistVeg.text(), self.txtNetwork2.text(),
+                   self.txtValley.text(), self.txtRVD.text(), self.txtConversion.text(),
+                   hucid=self.txtHUCID_2.text(), hucname=self.txtHUCName_2.text())
 
     #def btnBoxClick(self):
     #    projectxml = ProjectXML('/Users/matt/Desktop/myxml.xml', 'VBET', 'My VBET Project')
