@@ -109,14 +109,14 @@ class VBETproject:
         driver.CreateCopy(dem_copy, inDEM)
 
         newxml.addInput("Raster", "DEM", newxml.project, path=dem_copy, iid='DEM001')
-        newxml.addInput("Raster", "DEM", newxml.VBETrealizations[0], fileref='DEM001')
+        newxml.addInput("Raster", "DEM", newxml.VBETrealizations[0], inputref='DEM001')
 
         network_copy = '01_Inputs/02_Network/Network_001/' + os.path.basename(network_path)
         inNetwork = ogr.GetDriverByName('ESRI Shapefile').Open(network_path)
         ogr.GetDriverByName('ESRI Shapefile').CopyDataSource(inNetwork, network_copy)
 
         newxml.addInput("Vector", "Network", newxml.project, path=network_copy, iid='Network001')
-        newxml.addInput("Vector", "Network", newxml.VBETrealizations[0], fileref='Network001')
+        newxml.addInput("Vector", "Network", newxml.VBETrealizations[0], inputref='Network001')
 
         output_edited_copy = '02_Analyses/Output_001/' + os.path.basename(output_edited_path)
         inOutput_edited = ogr.GetDriverByName('ESRI Shapefile').Open(output_edited_path)
