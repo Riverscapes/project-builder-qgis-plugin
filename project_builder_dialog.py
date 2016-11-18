@@ -84,15 +84,15 @@ class ProjectBuilderDialog(QtGui.QDialog, FORM_CLASS):
 
     def copyVBET(self):
         VBETproject(self.txtOutputFolder.text(), self.txtDEM.text(), self.txtNetwork.text(), self.txtEOut.text(),
-                    huc_id=self.txtHUCID.text(), huc_name=self.txtHUCName.text(), smbuf=self.txtSmBuf.text(),
-                    medbuf=self.txtMedBuf.text(), lgbuf=self.txtLgBuf.text(), lowda=self.txtLowDA.text(),
-                    highda=self.txtHighDA.text(), lgslope=self.txtLgSlope.text(), medslope=self.txtMedSlope.text(),
-                    smslope=self.txtSmSlope.text())
+                    self.txtFA.text(), self.txtSlope.text(), self.txtUOut.text(), self.txtHUCID.text(),
+                    self.txtHUCName.text(), self.txtSmBuf.text(), self.txtMedBuf.text(), self.txtLgBuf.text(),
+                    self.txtLowDA.text(), self.txtHighDA.text(), self.txtLgSlope.text(), self.txtMedSlope.text(),
+                    self.txtSmSlope.text())
 
     def copyRVD(self):
         RVDproject(self.txtOutputFolder_2.text(), self.txtExVeg.text(), self.txtHistVeg.text(), self.txtNetwork2.text(),
-                   self.txtValley.text(), self.txtRVD.text(), self.txtConversion.text(),
-                   hucid=self.txtHUCID_2.text(), hucname=self.txtHUCName_2.text())
+                   self.txtValley.text(), self.txtRVD.text(), self.txtConversion.text(), self.txtLRP.text(),
+                   self.txtHUCID_2.text(), self.txtHUCName_2.text())
 
     #def btnBoxClick(self):
     #    projectxml = ProjectXML('/Users/matt/Desktop/myxml.xml', 'VBET', 'My VBET Project')

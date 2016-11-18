@@ -40,28 +40,28 @@ class VBETproject:
 
         newxml = ProjectXML(self.xmlpath, self.ToolName, self.ProjectName)
 
-        if self.huc_id is not '':
+        if not self.huc_id == '':
             newxml.addMeta('HUCID', self.huc_id, newxml.project)
-        if self.huc_name is not '':
+        if not self.huc_name == '':
             newxml.addMeta('HUCName', self.huc_name, newxml.project)
 
         newxml.addVBETRealization('VBET Realizaton 1', 1)
 
-        if self.smbuf is not '':
+        if not self.smbuf == '':
             newxml.addParameter("sm_buf", self.smbuf, newxml.VBETrealizations[0])
-        if self.medbuf is not '':
+        if not self.medbuf == '':
             newxml.addParameter("med_buf", self.medbuf, newxml.VBETrealizations[0])
-        if self.lgbuf is not '':
+        if not self.lgbuf == '':
             newxml.addParameter("lg_buf", self.lgbuf, newxml.VBETrealizations[0])
-        if self.lowda is not '':
+        if not self.lowda == '':
             newxml.addParameter("low_da", self.lowda, newxml.VBETrealizations[0])
-        if self.highda is not '':
+        if not self.highda == '':
             newxml.addParameter("high_da", self.highda, newxml.VBETrealizations[0])
-        if self.lgslope is not '':
+        if not self.lgslope == '':
             newxml.addParameter("lg_slope", self.lgslope, newxml.VBETrealizations[0])
-        if self.medslope is not '':
+        if not self.medslope == '':
             newxml.addParameter("med_slope", self.medslope, newxml.VBETrealizations[0])
-        if self.smslope is not '':
+        if not self.smslope == '':
             newxml.addParameter("sm_slope", self.smslope, newxml.VBETrealizations[0])
 
         self.set_structure(projPath)

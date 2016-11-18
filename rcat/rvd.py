@@ -28,9 +28,9 @@ class RVDproject:
 
         newxml = ProjectXML(self.xmlpath, self.ToolName, self.ProjectName)
 
-        if self.hucid is not '':
+        if not self.hucid == '':
             newxml.addMeta('HUCID', self.hucid, newxml.project)
-        if self.hucname is not '':
+        if not self.hucname == '':
             newxml.addMeta('HUCName', self.hucname, newxml.project)
 
         newxml.addRVDRealization('RVD Realization 1', 1)
