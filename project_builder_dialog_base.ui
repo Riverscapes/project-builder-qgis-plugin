@@ -54,7 +54,7 @@
            </size>
           </property>
           <property name="text">
-           <string>Edited Output</string>
+           <string>Edited Output (required)</string>
           </property>
          </widget>
         </item>
@@ -100,19 +100,6 @@
          </widget>
         </item>
        </layout>
-      </widget>
-      <widget class="QCheckBox" name="chkMoveFiles">
-       <property name="geometry">
-        <rect>
-         <x>420</x>
-         <y>680</y>
-         <width>87</width>
-         <height>20</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Move Files</string>
-       </property>
       </widget>
       <widget class="QWidget" name="horizontalLayoutWidget_4">
        <property name="geometry">
@@ -226,7 +213,7 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>624</y>
+         <y>630</y>
          <width>501</width>
          <height>41</height>
         </rect>
@@ -295,7 +282,7 @@
            </size>
           </property>
           <property name="text">
-           <string>DEM</string>
+           <string>DEM (required)</string>
           </property>
          </widget>
         </item>
@@ -361,7 +348,7 @@
            </size>
           </property>
           <property name="text">
-           <string>Network</string>
+           <string>Network (required)</string>
           </property>
          </widget>
         </item>
@@ -677,6 +664,59 @@
        <property name="standardButtons">
         <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
        </property>
+      </widget>
+      <widget class="QWidget" name="horizontalLayoutWidget_19">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>590</y>
+         <width>501</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout_19">
+        <item>
+         <widget class="QLabel" name="labelProjectName">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Project Name</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="txtProjectName">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </widget>
      <widget class="QWidget" name="tabRVD">
@@ -1211,17 +1251,6 @@
         </item>
        </layout>
       </widget>
-      <zorder>horizontalLayoutWidget_10</zorder>
-      <zorder>horizontalLayoutWidget_11</zorder>
-      <zorder>horizontalLayoutWidget_12</zorder>
-      <zorder>horizontalLayoutWidget_13</zorder>
-      <zorder>horizontalLayoutWidget_14</zorder>
-      <zorder>horizontalLayoutWidget_15</zorder>
-      <zorder>horizontalLayoutWidget_16</zorder>
-      <zorder>btnBox_2</zorder>
-      <zorder>horizontalLayoutWidget_17</zorder>
-      <zorder>horizontalLayoutWidget_18</zorder>
-      <zorder>labelLRP</zorder>
      </widget>
     </widget>
    </item>
@@ -1240,7 +1269,6 @@
   <tabstop>txtLowDA</tabstop>
   <tabstop>txtOutputFolder</tabstop>
   <tabstop>btnBrowseOutputFolder</tabstop>
-  <tabstop>chkMoveFiles</tabstop>
   <tabstop>tabWidget</tabstop>
  </tabstops>
  <resources/>

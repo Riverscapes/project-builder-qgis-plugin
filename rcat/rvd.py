@@ -1,6 +1,7 @@
 import os
 from osgeo import gdal
 from osgeo import ogr
+import shutil
 from projectxml import ProjectXML
 
 class RVDproject:
@@ -26,7 +27,7 @@ class RVDproject:
 
         self.xmlpath = self.projPath + '/rvd.xml'
 
-        newxml = ProjectXML(self.xmlpath, self.ToolName, self.ProjectName)
+        newxml = ProjectXML(self.xmlpath, self.ToolName, self.ToolVersion, self.ProjectName)
 
         if not self.hucid == '':
             newxml.addMeta('HUCID', self.hucid, newxml.project)
@@ -83,12 +84,15 @@ class RVDproject:
         if os.getcwd() is not projPath:
             os.chdir(projPath)
 
-        ex_veg_copy = '01_Inputs/01_Ex_Veg/Ex_Veg_001/' + os.path.basename(ex_veg)
-        inEx_veg = gdal.Open(ex_veg)
-        driver = gdal.GetDriverByName('AAIGrid')
-        driver.CreateCopy(ex_veg_copy, inEx_veg)
+        shutil.copytree(ex_veg, '01_Inputs/01_Ex_Veg/Ex_Veg_001/' + os.path.basename(ex_veg))
+        #ex_veg_copy = '01_Inputs/01_Ex_Veg/Ex_Veg_001/' + os.path.basename(ex_veg)
+        #inEx_veg = gdal.Open(ex_veg)
+        #driver = gdal.GetDriverByName('AAIGrid')
+        #driver.CreateCopy(ex_veg_copy, inEx_veg)
+        #src = os.path.dirname(ex_veg) + '/vat.adf'
+        #shutil.copy(src, os.path.dirname(ex_veg_copy))
 
-        newxml.addInput("Raster", "Existing Vegetation", newxml.project, path=ex_veg_copy, iid='EXVEG001')
+        newxml.addInput("Raster", "Existing Vegetation", newxml.project, path='01_Inputs/01_Ex_Veg/Ex_Veg_001/' + os.path.basename(ex_veg), iid='EXVEG001')
         newxml.addInput("Raster", "Existing Vegetation", newxml.RVDrealizations[0], inputref='EXVEG001')
 
         hist_veg_copy = '01_Inputs/02_Hist_Veg/Hist_Veg_001/' + os.path.basename(hist_veg)

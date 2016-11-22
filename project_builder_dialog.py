@@ -54,7 +54,7 @@ class ProjectBuilderDialog(QtGui.QDialog, FORM_CLASS):
         self.btnBrowseUOut.clicked.connect(lambda: self.file_browser(self.txtUOut))
         self.btnBrowseOutputFolder.clicked.connect(lambda: self.folder_browser(self.txtOutputFolder))
 
-        self.btnBrowseExVeg.clicked.connect(lambda: self.file_browser(self.txtExVeg))
+        self.btnBrowseExVeg.clicked.connect(lambda: self.folder_browser(self.txtExVeg))
         self.btnBrowseHistVeg.clicked.connect(lambda: self.file_browser(self.txtHistVeg))
         self.btnBrowseNetwork2.clicked.connect(lambda: self.file_browser(self.txtNetwork2))
         self.btnBrowseValley.clicked.connect(lambda: self.file_browser(self.txtValley))
@@ -83,11 +83,11 @@ class ProjectBuilderDialog(QtGui.QDialog, FORM_CLASS):
         self.recalc_state()
 
     def copyVBET(self):
-        VBETproject(self.txtOutputFolder.text(), self.txtDEM.text(), self.txtNetwork.text(), self.txtEOut.text(),
-                    self.txtFA.text(), self.txtSlope.text(), self.txtUOut.text(), self.txtHUCID.text(),
-                    self.txtHUCName.text(), self.txtSmBuf.text(), self.txtMedBuf.text(), self.txtLgBuf.text(),
-                    self.txtLowDA.text(), self.txtHighDA.text(), self.txtLgSlope.text(), self.txtMedSlope.text(),
-                    self.txtSmSlope.text())
+        VBETproject(self.txtProjectName.text(), self.txtOutputFolder.text(), self.txtDEM.text(), self.txtNetwork.text(),
+                    self.txtEOut.text(), self.txtFA.text(), self.txtSlope.text(), self.txtUOut.text(),
+                    self.txtHUCID.text(), self.txtHUCName.text(), self.txtSmBuf.text(), self.txtMedBuf.text(),
+                    self.txtLgBuf.text(), self.txtLowDA.text(), self.txtHighDA.text(), self.txtLgSlope.text(),
+                    self.txtMedSlope.text(), self.txtSmSlope.text())
 
     def copyRVD(self):
         RVDproject(self.txtOutputFolder_2.text(), self.txtExVeg.text(), self.txtHistVeg.text(), self.txtNetwork2.text(),

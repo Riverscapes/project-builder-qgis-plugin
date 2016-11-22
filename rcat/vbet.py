@@ -1,17 +1,18 @@
 import os
 from osgeo import gdal
 from osgeo import ogr
+import datetime
 from projectxml import ProjectXML
 
 
 class VBETproject:
     """class to create and populate a project structure for V-BET projects"""
 
-    def __init__(self, projPath, dem, network, output_edited, flow='', slope='', output_unedited='',
+    def __init__(self, projectName, projPath, dem, network, output_edited, flow='', slope='', output_unedited='',
                  huc_id='', huc_name='', smbuf='', medbuf='', lgbuf='', lowda='', highda='',
                  lgslope='', medslope='', smslope=''):
 
-        self.ProjectName = 'Sample VBET Project'
+        self.ProjectName = projectName
         self.ToolName = 'VBET'
         self.ToolVersion = '0.1'
 
@@ -27,6 +28,7 @@ class VBETproject:
         self.output_unedited_path = output_unedited
         self.huc_id = huc_id
         self.huc_name = huc_name
+        self.time = datetime.datetime.now()
         self.smbuf = smbuf
         self.medbuf = medbuf
         self.lgbuf = lgbuf
@@ -38,12 +40,14 @@ class VBETproject:
 
         self.xmlpath = self.proj_path + '/vbet.xml'
 
-        newxml = ProjectXML(self.xmlpath, self.ToolName, self.ProjectName)
+        newxml = ProjectXML(self.xmlpath, self.ToolName, self.ToolVersion, self.ProjectName)
 
         if not self.huc_id == '':
             newxml.addMeta('HUCID', self.huc_id, newxml.project)
         if not self.huc_name == '':
             newxml.addMeta('HUCName', self.huc_name, newxml.project)
+
+        newxml.addMeta('ProjectCreated', self.time.strftime('%Y-%m-%d %H:%M:%S'), newxml.project)
 
         newxml.addVBETRealization('VBET Realizaton 1', 1)
 

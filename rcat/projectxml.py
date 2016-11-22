@@ -5,7 +5,7 @@ import xml.dom.minidom as minidom
 
 class ProjectXML:
 
-    def __init__(self, filepath, projType, name):
+    def __init__(self, filepath, projType, version, name):
         self.logFilePath = filepath
 
         # File exists. Delete it.
@@ -25,7 +25,7 @@ class ProjectXML:
         self.name = ET.SubElement(self.project, "Name")
         self.name.text = name
         self.projectType = ET.SubElement(self.project, "ProjectType")
-        self.projectType.set('Version', '1')
+        self.projectType.set('Version', version)
         self.projectType.text = projType
 
         # Add some containers we will fill out later
