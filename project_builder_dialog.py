@@ -26,6 +26,7 @@ import os
 #from projectxml import ProjectXML
 from rcat.vbet import VBETproject
 from rcat.rvd import RVDproject
+from rcat.rca import RCAproject
 from PyQt4 import QtGui, uic
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
@@ -55,13 +56,23 @@ class ProjectBuilderDialog(QtGui.QDialog, FORM_CLASS):
         self.btnBrowseOutputFolder.clicked.connect(lambda: self.folder_browser(self.txtOutputFolder))
 
         self.btnBrowseExVeg.clicked.connect(lambda: self.folder_browser(self.txtExVeg))
-        self.btnBrowseHistVeg.clicked.connect(lambda: self.file_browser(self.txtHistVeg))
+        self.btnBrowseHistVeg.clicked.connect(lambda: self.folder_browser(self.txtHistVeg))
         self.btnBrowseNetwork2.clicked.connect(lambda: self.file_browser(self.txtNetwork2))
         self.btnBrowseValley.clicked.connect(lambda: self.file_browser(self.txtValley))
         self.btnBrowseRVD.clicked.connect(lambda: self.file_browser(self.txtRVD))
         self.btnBrowseConversion.clicked.connect(lambda: self.file_browser(self.txtConversion))
         self.btnBrowseLRP.clicked.connect(lambda: self.file_browser(self.txtLRP))
+        self.btnBrowseThiessen.clicked.connect(lambda: self.file_browser(self.txtThiessen))
         self.btnBrowseOutputFolder_2.clicked.connect(lambda: self.folder_browser(self.txtOutputFolder_2))
+
+        self.btnBrowseExVeg_2.clicked.connect(lambda: self.folder_browser(self.txtExVeg_2))
+        self.btnBrowseHistVeg_2.clicked.connect(lambda: self.folder_browser(self.txtHistVeg_2))
+        self.btnBrowseNetwork3.clicked.connect(lambda: self.file_browser(self.txtNetwork3))
+        self.btnBrowseValley_2.clicked.connect(lambda: self.file_browser(self.txtValley_2))
+        self.btnBrowseRCA.clicked.connect(lambda: self.file_browser(self.txtRCA))
+        self.btnBrowseLRP_2.clicked.connect(lambda: self.file_browser(self.txtLRP_2))
+        self.btnBrowseThiessen_2.clicked.connect(lambda: self.file_browser(self.txtThiessen_2))
+        self.btnBrowseOutputFolder_3.clicked.connect(lambda: self.folder_browser(self.txtOutputFolder_3))
 
         # Handle what happens when we click OK
         self.btnBox.button(QtGui.QDialogButtonBox.Ok).clicked.connect(self.copyVBET)
@@ -69,6 +80,9 @@ class ProjectBuilderDialog(QtGui.QDialog, FORM_CLASS):
 
         self.btnBox_2.button(QtGui.QDialogButtonBox.Ok).clicked.connect(self.copyRVD)
         self.btnBox_2.button(QtGui.QDialogButtonBox.Cancel).clicked.connect(self.close)
+
+        self.btnBox_3.button(QtGui.QDialogButtonBox.Ok).clicked.connect(self.copyRCA)
+        self.btnBox_3.button(QtGui.QDialogButtonBox.Cancel).clicked.connect(self.close)
 
         print "GUI loaded and linked"
 
@@ -90,9 +104,16 @@ class ProjectBuilderDialog(QtGui.QDialog, FORM_CLASS):
                     self.txtMedSlope.text(), self.txtSmSlope.text())
 
     def copyRVD(self):
-        RVDproject(self.txtOutputFolder_2.text(), self.txtExVeg.text(), self.txtHistVeg.text(), self.txtNetwork2.text(),
-                   self.txtValley.text(), self.txtRVD.text(), self.txtConversion.text(), self.txtLRP.text(),
-                   self.txtHUCID_2.text(), self.txtHUCName_2.text())
+        RVDproject(self.txtProjectName_2.text(), self.txtOutputFolder_2.text(), self.txtExVeg.text(),
+                   self.txtHistVeg.text(), self.txtNetwork2.text(), self.txtValley.text(), self.txtRVD.text(),
+                   self.txtConversion.text(), self.txtLRP.text(), self.txtThiessen.text(), self.txtHUCID_2.text(),
+                   self.txtHUCName_2.text())
+
+    def copyRCA(self):
+        RCAproject(self.txtProjectName_3.text(), self.txtOutputFolder_3.text(), self.txtExVeg_2.text(),
+                   self.txtHistVeg_2.text(), self.txtNetwork3.text(), self.txtValley_2.text(), self.txtRCA.text(),
+                   self.txtLRP_2.text(), self.txtThiessen_2.text(), self.txtHUCID_3.text(), self.txtHUCName_3.text(),
+                   self.txtVBWidth.text())
 
     #def btnBoxClick(self):
     #    projectxml = ProjectXML('/Users/matt/Desktop/myxml.xml', 'VBET', 'My VBET Project')

@@ -7,9 +7,10 @@ from projectxml import ProjectXML
 class RVDproject:
     """class to create and populate a project structure for RVD projects"""
 
-    def __init__(self, projPath, ex_veg, hist_veg, network, valleybottom, rvd, conversion='', lrp='', hucid='', hucname=''):
+    def __init__(self, projectName, projPath, ex_veg, hist_veg, network, valleybottom, rvd, conversion='', lrp='', thiessen='',
+                 hucid='', hucname=''):
 
-        self.ProjectName = 'Sample RVD Project'
+        self.ProjectName = projectName
         self.ToolName = 'RVD'
         self.ToolVersion = '0.1'
 
@@ -24,6 +25,7 @@ class RVDproject:
         self.rvd = rvd
         self.conversion = conversion
         self.lrp = lrp
+        self.thiessen = thiessen
 
         self.xmlpath = self.projPath + '/rvd.xml'
 
@@ -37,7 +39,7 @@ class RVDproject:
         newxml.addRVDRealization('RVD Realization 1', 1)
 
         self.set_structure(projPath)
-        self.copy_datasets(projPath, ex_veg, hist_veg, network, valleybottom, rvd, conversion, lrp, newxml)
+        self.copy_datasets(projPath, ex_veg, hist_veg, network, valleybottom, rvd, conversion, lrp, thiessen, newxml)
 
         newxml.write()
 
@@ -78,7 +80,7 @@ class RVDproject:
         os.mkdir('Outputs_001')
         os.chdir(projPath)
 
-    def copy_datasets(self, projPath, ex_veg, hist_veg, network, valleybottom, rvd, conversion, lrp, newxml):
+    def copy_datasets(self, projPath, ex_veg, hist_veg, network, valleybottom, rvd, conversion, lrp, thiessen, newxml):
         """Copies the existing data sets used to run RVD into the RVD project structure"""
 
         if os.getcwd() is not projPath:
@@ -92,15 +94,18 @@ class RVDproject:
         #src = os.path.dirname(ex_veg) + '/vat.adf'
         #shutil.copy(src, os.path.dirname(ex_veg_copy))
 
-        newxml.addInput("Raster", "Existing Vegetation", newxml.project, path='01_Inputs/01_Ex_Veg/Ex_Veg_001/' + os.path.basename(ex_veg), iid='EXVEG001')
+        newxml.addInput("Raster", "Existing Vegetation", newxml.project,
+                        path='01_Inputs/01_Ex_Veg/Ex_Veg_001/' + os.path.basename(ex_veg), iid='EXVEG001')
         newxml.addInput("Raster", "Existing Vegetation", newxml.RVDrealizations[0], inputref='EXVEG001')
 
-        hist_veg_copy = '01_Inputs/02_Hist_Veg/Hist_Veg_001/' + os.path.basename(hist_veg)
-        inHist_veg = gdal.Open(hist_veg)
-        driver = gdal.GetDriverByName('AAIGrid')
-        driver.CreateCopy(hist_veg_copy, inHist_veg)
+        shutil.copytree(hist_veg, '01_Inputs/02_Hist_Veg/Hist_Veg_001/' + os.path.basename(hist_veg))
+        #hist_veg_copy = '01_Inputs/02_Hist_Veg/Hist_Veg_001/' + os.path.basename(hist_veg)
+        #inHist_veg = gdal.Open(hist_veg)
+        #driver = gdal.GetDriverByName('AAIGrid')
+        #driver.CreateCopy(hist_veg_copy, inHist_veg)
 
-        newxml.addInput("Raster", "Historic Vegetation", newxml.project, path=hist_veg_copy, iid='HISTVEG001')
+        newxml.addInput("Raster", "Historic Vegetation", newxml.project,
+                        path='01_Inputs/02_Hist_Veg/Hist_Veg_001/' + os.path.basename(hist_veg), iid='HISTVEG001')
         newxml.addInput("Raster", "Historic Vegetation", newxml.RVDrealizations[0], inputref='HISTVEG001')
 
         network_copy = '01_Inputs/03_Network/Network_001/' + os.path.basename(network)
@@ -138,6 +143,13 @@ class RVDproject:
 
             newxml.addInput("Vector", "Large River Polygon", newxml.project, path=lrp_copy, iid='LRP001')
             newxml.addInput("Vector", "Large River Polygon", newxml.RVDrealizations[0], inputref='LRP001')
+
+        if not thiessen == '':
+            thiessen_copy = '01_Inputs/03_Network/Network_001/Thiessen/' + os.path.basename(thiessen)
+            inThiessen = ogr.GetDriverByName('ESRI Shapefile').Open(thiessen)
+            ogr.GetDriverByName('ESRI Shapefile').CopyDataSource(inThiessen, thiessen_copy)
+
+            newxml.addInput("Vector", "Thiessen Polygons", newxml.RVDrealizations[0], path=thiessen_copy)
 
 
 

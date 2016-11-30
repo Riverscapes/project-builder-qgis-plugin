@@ -33,6 +33,7 @@ class ProjectXML:
         self.realizations = ET.SubElement(self.project, "Realizations")
         self.VBETrealizations = []
         self.RVDrealizations = []
+        self.RCArealizations = []
 
     def addMeta(self, name, value, parentNode):
         metaNode = parentNode.find("MetaData")
@@ -129,6 +130,14 @@ class ProjectXML:
         nameNode = ET.SubElement(node, "Name")
         nameNode.text = str(name)
         self.RVDrealizations.append(node)
+
+    def addRCARealization(self, name, id):
+        node = ET.SubElement(self.realizations, "RCA")
+        node.set("id", str(id))
+        node.set("Guid", self.getUUID())
+        nameNode = ET.SubElement(node, "Name")
+        nameNode.text = str(name)
+        self.RCArealizations.append(node)
 
     def write(self):
         """
