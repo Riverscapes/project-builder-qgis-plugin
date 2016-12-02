@@ -44,8 +44,9 @@ class VBETproject:
 
         if not self.huc_id == '':
             newxml.addMeta('HUCID', self.huc_id, newxml.project)
+        newxml.addMeta('Region', 'CRB', newxml.project)
         if not self.huc_name == '':
-            newxml.addMeta('HUCName', self.huc_name, newxml.project)
+            newxml.addMeta('Watershed', self.huc_name, newxml.project)
 
         newxml.addMeta('ProjectCreated', self.time.strftime('%Y-%m-%d %H:%M:%S'), newxml.project)
 
@@ -107,10 +108,18 @@ class VBETproject:
         if os.getcwd() is not proj_path:
             os.chdir(proj_path)
 
+        fname, fext = os.path.splitext(dem_path)
         dem_copy = '01_Inputs/01_Topo/DEM_001/' + os.path.basename(dem_path)
         inDEM = gdal.Open(dem_path)
-        driver = gdal.GetDriverByName('GTiff')
-        driver.CreateCopy(dem_copy, inDEM)
+        if fext == '.tif':
+            driver = gdal.GetDriverByName('GTiff')
+            driver.CreateCopy(dem_copy, inDEM)
+        elif fext == '.img':
+            driver = gdal.GetDriverByName('HFA')
+            driver.CreateCopy(dem_copy, inDEM)
+        else:
+            raise Exception('input DEM is not type .tif or .img')
+        del fname, fext
 
         newxml.addInput("Raster", "DEM", newxml.project, path=dem_copy, iid='DEM001')
         newxml.addInput("Raster", "DEM", newxml.VBETrealizations[0], inputref='DEM001')
@@ -129,24 +138,39 @@ class VBETproject:
         newxml.addOutput("Analysis 001", "Vector", "Valley Bottom 001", output_edited_copy, newxml.VBETrealizations[0])
 
         if not flow_path == '':
+            fname, fext = os.path.splitext(flow_path)
             flow_copy = '01_Inputs/01_Topo/DEM_001/Flow/' + os.path.basename(flow_path)
             inFlow = gdal.Open(flow_path)
-            driver = gdal.GetDriverByName('GTiff')
-            driver.CreateCopy(flow_copy, inFlow)
+            if fext == '.tif':
+                driver = gdal.GetDriverByName('GTiff')
+                driver.CreateCopy(flow_copy, inFlow)
+            elif fext == '.img':
+                driver = gdal.GetDriverByName('HFA')
+                driver.CreateCopy(flow_copy, inFlow)
+            else:
+                raise Exception('drainage area raster is not type .tif or .img')
+            del fname, fext
 
-            newxml.addInput("Raster", "Drainage Area", flow_copy)
+            newxml.addInput("Raster", "Drainage Area", newxml.VBETrealizations[0], path=flow_copy)
 
         if not slope_path == '':
+            fname, fext = os.path.splitext(slope_path)
             slope_copy = '01_Inputs/01_Topo/DEM_001/Slope/' + os.path.basename(slope_path)
             inSlope = gdal.Open(slope_path)
-            driver = gdal.GetDriverByName('GTiff')
-            driver.CreateCopy(slope_copy, inSlope)
+            if fext == '.tif':
+                driver = gdal.GetDriverByName('GTiff')
+                driver.CreateCopy(slope_copy, inSlope)
+            elif fext == '.img':
+                driver = gdal.GetDriverByName('HFA')
+                driver.CreateCopy(slope_copy, inSlope)
+            else:
+                raise Exception('slope raster is not type .tif or .img')
 
-            newxml.addInput("Raster", "Slope", slope_copy)
+            newxml.addInput("Raster", "Slope", newxml.VBETrealizations[0], path=slope_copy)
 
         if not output_unedited_path == '':
             output_unedited_copy = '02_Analyses/Output_001/' + os.path.basename(output_unedited_path)
             inOutput_unedited = ogr.GetDriverByName('ESRI Shapefile').Open(output_unedited_path)
             ogr.GetDriverByName('ESRI Shapfile').CopyDataSource(inOutput_unedited, output_unedited_copy)
 
-            newxml.addInput("Vector", "Unedited Valley Bottom", output_unedited_copy)
+            newxml.addInput("Vector", "Unedited Valley Bottom", newxml.VBETrealizations[0], path=output_unedited_copy)

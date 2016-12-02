@@ -33,8 +33,9 @@ class RCAproject:
 
         if not self.hucid == '':
             newxml.addMeta('HUCID', self.hucid, newxml.project)
+        newxml.addMeta('Region', 'CRB', newxml.project)
         if not self.hucname == '':
-            newxml.addMeta('HUCName', self.hucname, newxml.project)
+            newxml.addMeta('Watershed', self.hucname, newxml.project)
 
         newxml.addRCARealization('RCA Realization 1', 1)
 

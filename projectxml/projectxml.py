@@ -4,6 +4,7 @@ import xml.etree.ElementTree as ET
 import xml.dom.minidom as minidom
 
 class ProjectXML:
+    """creates an instance of a project xml file"""
 
     def __init__(self, filepath, projType, version, name):
         self.logFilePath = filepath
@@ -18,7 +19,7 @@ class ProjectXML:
 
         # Set up a root Project node
         self.project.set('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance')
-        self.project.set('xsi:noNamespaceSchemaLocation', 'XSD/V1/Project.xsd')
+        self.project.set('xsi:noNamespaceSchemaLocation', 'http://riverscapes.northarrowresearch.com/XSD/V1/Project.xsd')
         self.project.set("Guid", self.getUUID())
 
         # Set up the <Name> and <ProjectType> tags
@@ -36,6 +37,7 @@ class ProjectXML:
         self.RCArealizations = []
 
     def addMeta(self, name, value, parentNode):
+        """adds metadata tags to the project xml document"""
         metaNode = parentNode.find("MetaData")
         if metaNode is None:
             metaNode = ET.SubElement(parentNode, "MetaData")
@@ -45,6 +47,7 @@ class ProjectXML:
         node.text = str(value)
 
     def addInput(self, itype, name, parentNode, path='', iid='', iguid='', basepath='', inputref=''):
+        """adds input tags to the project xml documuent"""
         if parentNode == self.project:
             typeNode = ET.SubElement(self.Inputs, itype)
             if iid is not '':
@@ -85,6 +88,7 @@ class ProjectXML:
                 filerefNode.text = str(inputref)
 
     def addParameter(self, name, value, parentNode):
+        """adds parameter tags to the project xml document"""
         paramNode = parentNode.find("Parameters")
         if paramNode is None:
             paramNode = ET.SubElement(parentNode, "Parameters")
@@ -94,6 +98,7 @@ class ProjectXML:
         node.text = str(value)
 
     def addOutput(self, aname, otype, name, path, parentNode, basepath='', fileref=''):
+        """adds an output tag to an analysis tag in the project xml document"""
         analysisNode = parentNode.find("Analysis")
         if analysisNode is None:
             analysisNode = ET.SubElement(parentNode, "Analysis")
@@ -116,6 +121,7 @@ class ProjectXML:
             filerefNode.text = str(fileref)
 
     def addVBETRealization(self, name, id):
+        """adds a VBET realization tag to the project xml document"""
         node = ET.SubElement(self.realizations, "VBET")
         node.set("id", str(id))
         node.set("Guid", self.getUUID())
@@ -124,6 +130,7 @@ class ProjectXML:
         self.VBETrealizations.append(node)
 
     def addRVDRealization(self, name, id):
+        """adds an RVD realization tag to the project xml document"""
         node = ET.SubElement(self.realizations, "RVD")
         node.set("id", str(id))
         node.set("Guid", self.getUUID())
@@ -132,6 +139,7 @@ class ProjectXML:
         self.RVDrealizations.append(node)
 
     def addRCARealization(self, name, id):
+        """adds an RCA realization tag to the project xml document"""
         node = ET.SubElement(self.realizations, "RCA")
         node.set("id", str(id))
         node.set("Guid", self.getUUID())
