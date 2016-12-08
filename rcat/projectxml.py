@@ -6,7 +6,7 @@ import xml.dom.minidom as minidom
 class ProjectXML:
     """creates an instance of a project xml file"""
 
-    def __init__(self, filepath, projType, version, name):
+    def __init__(self, filepath, projType, name):
         self.logFilePath = filepath
 
         # File exists. Delete it.
@@ -19,14 +19,12 @@ class ProjectXML:
 
         # Set up a root Project node
         self.project.set('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance')
-        self.project.set('xsi:noNamespaceSchemaLocation', 'http://riverscapes.northarrowresearch.com/XSD/V1/Project.xsd')
-        self.project.set("Guid", self.getUUID())
+        self.project.set('xsi:noNamespaceSchemaLocation', 'https://raw.githubusercontent.com/Riverscapes/Program/master/Project/XSD/V1/Project.xsd')
 
         # Set up the <Name> and <ProjectType> tags
         self.name = ET.SubElement(self.project, "Name")
         self.name.text = name
         self.projectType = ET.SubElement(self.project, "ProjectType")
-        self.projectType.set('Version', version)
         self.projectType.text = projType
 
         # Add some containers we will fill out later
@@ -43,49 +41,136 @@ class ProjectXML:
             metaNode = ET.SubElement(parentNode, "MetaData")
 
         node = ET.SubElement(metaNode, "Meta")
-        node.set("Name", name)
+        node.set("name", name)
         node.text = str(value)
 
-    def addInput(self, itype, name, parentNode, path='', iid='', iguid='', basepath='', inputref=''):
-        """adds input tags to the project xml documuent"""
-        if parentNode == self.project:
-            typeNode = ET.SubElement(self.Inputs, itype)
-            if iid is not '':
-                typeNode.set('id', iid)
-            if iguid is not '':
-                typeNode.set('Guid', iguid)
-            nameNode = ET.SubElement(typeNode, "Name")
-            nameNode.text = str(name)
-            if path is not '':
-                pathNode = ET.SubElement(typeNode, "Path")
-                pathNode.text = str(path)
-            if basepath is not '':
-                basepathNode = ET.SubElement(typeNode, "BasePath")
-                basepathNode.text = str(basepath)
-            if inputref is not '':
-                filerefNode = ET.SubElement(typeNode, "InputRef")
-                filerefNode.text = str(inputref)
+    def addProjectInput(self, itype, name, path, project='', iid='', guid='', ref=''):
+        typeNode = ET.SubElement(self.Inputs, itype)
+        if iid is not '':
+            typeNode.set('id', iid)
+        if guid is not '':
+            typeNode.set('guid', guid)
+        if ref is not '':
+            typeNode.set('ref', ref)
+        nameNode = ET.SubElement(typeNode, "Name")
+        nameNode.text = str(name)
+        pathNode = ET.SubElement(typeNode, "Path")
+        pathNode.text = str(path)
+        if project is not '':
+            projectNode = ET.SubElement(typeNode, "Project")
+            projectNode.text = str(project)
 
-        else:
-            inputsNode = parentNode.find("Inputs")
-            if inputsNode is None:
-                inputsNode = ET.SubElement(parentNode, "Inputs")
-            typeNode = ET.SubElement(inputsNode, itype)
-            if iid is not '':
-                typeNode.set('id', iid)
-            if iguid is not '':
-                typeNode.set('Guid', iguid)
-            nameNode = ET.SubElement(typeNode, "Name")
-            nameNode.text = str(name)
+    def addVBETInput(self, parentNode, type, name='', path='', project='', iid='', guid='', ref=''):
+        """adds input tags to the project xml documuent"""
+        inputsNode = parentNode.find("Inputs")
+        if inputsNode is None:
+            inputsNode = ET.SubElement(parentNode, "Inputs")
+        if type == 'DEM':
+            topoNode = inputsNode.find("Topography")
+            if topoNode is None:
+                topoNode = ET.SubElement(inputsNode, "Topography")
+            demNode = ET.SubElement(topoNode, "DEM")
+            if name is not '':
+                nameNode = ET.SubElement(demNode, "Name")
+                nameNode.text = str(name)
             if path is not '':
-                pathNode = ET.SubElement(typeNode, "Path")
+                pathNode = ET.SubElement(demNode, "Path")
                 pathNode.text = str(path)
-            if basepath is not '':
-                basepathNode = ET.SubElement(typeNode, "BasePath")
-                basepathNode.text = str(basepath)
-            if inputref is not '':
-                filerefNode = ET.SubElement(typeNode, "InputRef")
-                filerefNode.text = str(inputref)
+            if project is not '':
+                projectNode = ET.SubElement(demNode, "Project")
+                projectNode.text = str(project)
+            if iid is not '':
+                demNode.set('id', iid)
+            if guid is not '':
+                demNode.set('guid', guid)
+            if ref is not '':
+                demNode.set('ref', ref)
+        if type == 'Flow':
+            topoNode = inputsNode.find("Topography")
+            if topoNode is None:
+                topoNode = ET.SubElement(inputsNode, "Topography")
+            flowNode = ET.SubElement(topoNode, "Flow")
+            if name is not '':
+                nameNode = ET.SubElement(flowNode, "Name")
+                nameNode.text = str(name)
+            if path is not '':
+                pathNode = ET.SubElement(flowNode, "Path")
+                pathNode.text = str(path)
+            if project is not '':
+                projectNode = ET.SubElement(flowNode, "Project")
+                projectNode.text = str(project)
+            if iid is not '':
+                flowNode.set('id', iid)
+            if guid is not '':
+                flowNode.set('guid', guid)
+            if ref is not '':
+                flowNode.set('ref', ref)
+        if type == 'Slope':
+            topoNode = inputsNode.find("Topography")
+            if topoNode is None:
+                topoNode = ET.SubElement(inputsNode, "Topography")
+            slopeNode = ET.SubElement(topoNode, "Slope")
+            if name is not '':
+                nameNode = ET.SubElement(slopeNode, "Name")
+                nameNode.text = str(name)
+            if path is not '':
+                pathNode = ET.SubElement(slopeNode, "Path")
+                pathNode.text = str(path)
+            if project is not '':
+                projectNode = ET.SubElement(slopeNode, "Project")
+                projectNode.text = str(project)
+            if iid is not '':
+                slopeNode.set('id', iid)
+            if guid is not '':
+                slopeNode.set('guid', guid)
+            if ref is not '':
+                slopeNode.set('ref', ref)
+        if type == 'Network':
+            dnNode = inputsNode.find("DrainageNetworks")
+            if dnNode is None:
+                dnNode = ET.SubElement(inputsNode, "DrainageNetworks")
+            networkNode = ET.SubElement(dnNode, "Network")
+            if name is not '':
+                nameNode = ET.SubElement(networkNode, "Name")
+                nameNode.text = str(name)
+            if path is not '':
+                pathNode = ET.SubElement(networkNode, "Path")
+                pathNode.text = str(path)
+            if project is not '':
+                projectNode = ET.SubElement(networkNode, "Project")
+                projectNode.text = str(project)
+            if iid is not '':
+                networkNode.set('id', iid)
+            if guid is not '':
+                networkNode.set('guid', guid)
+            if ref is not '':
+                networkNode.set('ref', ref)
+        if type == 'Buffer':
+            dnNode = inputsNode.find("DrainageNetworks")
+            if dnNode is None:
+                dnNode = ET.SubElement(inputsNode, "DrainageNetworks")
+            networkNode = dnNode.find("Network")
+            if networkNode is None:
+                networkNode = ET.SubElement(dnNode, "Network")
+            buffersNode = networkNode.find("Buffers")
+            if buffersNode is None:
+                buffersNode = ET.SubElement(networkNode, "Buffers")
+            bufferNode = ET.SubElement(buffersNode, "Buffer")
+            if name is not '':
+                nameNode = ET.SubElement(bufferNode, "Name")
+                nameNode.text = str(name)
+            if path is not '':
+                pathNode = ET.SubElement(bufferNode, "Path")
+                pathNode.text = str(path)
+            if project is not '':
+                projectNode = ET.SubElement(bufferNode, "Project")
+                projectNode.text = str(project)
+            if iid is not '':
+                bufferNode.set('id', iid)
+            if guid is not '':
+                bufferNode.set('guid', guid)
+            if ref is not '':
+                bufferNode.set('ref', ref)
 
     def addParameter(self, name, value, parentNode):
         """adds parameter tags to the project xml document"""
@@ -94,10 +179,10 @@ class ProjectXML:
             paramNode = ET.SubElement(parentNode, "Parameters")
 
         node = ET.SubElement(paramNode, "Param")
-        node.set("Name", name)
+        node.set("name", name)
         node.text = str(value)
 
-    def addOutput(self, aname, otype, name, path, parentNode, basepath='', fileref=''):
+    def addOutput(self, aname, otype, name, path, parentNode, project='', oid='', guid='', ref=''):
         """adds an output tag to an analysis tag in the project xml document"""
         analysisNode = parentNode.find("Analysis")
         if analysisNode is None:
@@ -108,28 +193,38 @@ class ProjectXML:
             outputsNode = ET.SubElement(analysisNode, "Outputs")
 
         typeNode = ET.SubElement(outputsNode, otype)
+        if oid is not '':
+            typeNode.set('id', oid)
+        if guid is not '':
+            typeNode.set('guid', guid)
+        if ref is not '':
+            typeNode.set('ref', ref)
         nameNode = ET.SubElement(typeNode, "Name")
         nameNode.text = str(name)
         pathNode = ET.SubElement(typeNode, "Path")
         pathNode.text = str(path)
 
-        if basepath is not '':
-            basepathNode = ET.SubElement(typeNode, "BasePath")
-            basepathNode.text = str(basepath)
-        if fileref is not '':
-            filerefNode = ET.SubElement(typeNode, "fileRef")
-            filerefNode.text = str(fileref)
+        if project is not '':
+            projectNode = ET.SubElement(typeNode, "Project")
+            projectNode.text = str(project)
 
-    def addVBETRealization(self, name, id):
+    def addVBETRealization(self, name, promoted='', dateCreated='', productVersion='', guid=''):
         """adds a VBET realization tag to the project xml document"""
         node = ET.SubElement(self.realizations, "VBET")
-        node.set("id", str(id))
-        node.set("Guid", self.getUUID())
+        if promoted is not '':
+            node.set('promoted', promoted)
+        if dateCreated is not '':
+            node.set('dateCreated', dateCreated)
+        if productVersion is not '':
+            node.set('productVersion', productVersion)
+        if guid is not '':
+            node.set('guid', guid)
         nameNode = ET.SubElement(node, "Name")
         nameNode.text = str(name)
+
         self.VBETrealizations.append(node)
 
-    def addRVDRealization(self, name, id):
+    def addRVDRealization(self, name, id):  # will need to update like VBET
         """adds an RVD realization tag to the project xml document"""
         node = ET.SubElement(self.realizations, "RVD")
         node.set("id", str(id))
@@ -138,7 +233,7 @@ class ProjectXML:
         nameNode.text = str(name)
         self.RVDrealizations.append(node)
 
-    def addRCARealization(self, name, id):
+    def addRCARealization(self, name, id):  # will need to update like VBET
         """adds an RCA realization tag to the project xml document"""
         node = ET.SubElement(self.realizations, "RCA")
         node.set("id", str(id))
