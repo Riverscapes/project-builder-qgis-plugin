@@ -52,7 +52,7 @@ class VBETproject:
         # newxml.addMeta('ProjectCreated', self.time.strftime('%Y-%m-%d %H:%M:%S'), newxml.project)
 
         rguid = self.getUUID()
-        newxml.addVBETRealization('VBET Realization1', dateCreated=self.time.strftime('%Y-%m-%d %H:%M:%S'),
+        newxml.addVBETRealization('VBET Realization 1', dateCreated=self.time.strftime('%Y-%m-%d %H:%M:%S'),
                                   productVersion=self.ToolVersion, guid=rguid)
 
         if not self.smbuf == '':

@@ -61,7 +61,7 @@ class ProjectXML:
             projectNode.text = str(project)
 
     def addVBETInput(self, parentNode, type, name='', path='', project='', iid='', guid='', ref=''):
-        """adds input tags to the project xml documuent"""
+        """adds input tags to the project xml document"""
         inputsNode = parentNode.find("Inputs")
         if inputsNode is None:
             inputsNode = ET.SubElement(parentNode, "Inputs")
@@ -172,6 +172,177 @@ class ProjectXML:
             if ref is not '':
                 bufferNode.set('ref', ref)
 
+    def addRVDInput(self, parentNode, type, name='', path='', project='', iid='', guid='', ref=''):
+        """adds input tags to the project xml document"""
+        inputsNode = parentNode.find("Inputs")
+        if inputsNode is None:
+            inputsNode = ET.SubElement(parentNode, "Inputs")
+        if type == 'Existing Vegetation':
+            exNode = inputsNode.find("ExistingVegetation")
+            if exNode is None:
+                exNode = ET.SubElement(inputsNode, "ExistingVegetation")
+            if name is not '':
+                nameNode = ET.SubElement(exNode, "Name")
+                nameNode.text = str(name)
+            if path is not '':
+                pathNode = ET.SubElement(exNode, "Path")
+                pathNode.text = str(path)
+            if project is not '':
+                projectNode = ET.SubElement(exNode, "Project")
+                projectNode.text = str(project)
+            if iid is not '':
+                exNode.set('id', iid)
+            if guid is not '':
+                exNode.set('guid', guid)
+            if ref is not '':
+                exNode.set('ref', ref)
+        if type == 'Existing Cover':
+            exNode = inputsNode.find("ExistingVegetation")
+            if exNode is None:
+                exNode = ET.SubElement(inputsNode, "ExistingVegetation")
+            excovNode = exNode.find("ExistingCoverRasters")
+            if excovNode is None:
+                excovNode = ET.SubElement(exNode, "ExistingCoverRasters")
+            rasterNode = ET.SubElement(excovNode, "Raster")
+            if name is not '':
+                nameNode = ET.SubElement(rasterNode, "Name")
+                nameNode.text = str(name)
+            if path is not '':
+                pathNode = ET.SubElement(rasterNode, "Path")
+                pathNode.text = str(path)
+            if project is not '':
+                projectNode = ET.SubElement(rasterNode, "Project")
+                projectNode.text = str(project)
+            if iid is not '':
+                rasterNode.set('id', iid)
+            if guid is not '':
+                rasterNode.set('guid', guid)
+            if ref is not '':
+                rasterNode.set('ref', ref)
+        if type == 'Historic Vegetation':
+            histNode = inputsNode.find("HistoricVegetation")
+            if histNode is None:
+                histNode = ET.SubElement(inputsNode, "HistoricVegetation")
+            if name is not '':
+                nameNode = ET.SubElement(histNode, "Name")
+                nameNode.text = str(name)
+            if path is not '':
+                pathNode = ET.SubElement(histNode, "Path")
+                pathNode.text = str(path)
+            if project is not '':
+                projectNode = ET.SubElement(histNode, "Project")
+                projectNode.text = str(project)
+            if iid is not '':
+                histNode.set('id', iid)
+            if guid is not '':
+                histNode.set('guid', guid)
+            if ref is not '':
+                histNode.set('ref', ref)
+        if type == 'Historic Cover':
+            histNode = inputsNode.find("HistoricVegetation")
+            if histNode is None:
+                histNode = ET.SubElement(inputsNode, "HistoricVegetation")
+            histcovNode = histNode.find("HistoricCoverRasters")
+            if histcovNode is None:
+                histcovNode = ET.SubElement(histNode, "HistoricCoverRasters")
+            rasterNode = ET.SubElement(histcovNode, "Raster")
+            if name is not '':
+                nameNode = ET.SubElement(rasterNode, "Name")
+                nameNode.text = str(name)
+            if path is not '':
+                pathNode = ET.SubElement(rasterNode, "Path")
+                pathNode.text = str(path)
+            if project is not '':
+                projectNode = ET.SubElement(rasterNode, "Project")
+                projectNode.text = str(project)
+            if iid is not '':
+                rasterNode.set('id', iid)
+            if guid is not '':
+                rasterNode.set('guid', guid)
+            if ref is not '':
+                rasterNode.set('ref', ref)
+        if type == 'Network':
+            dnNode = inputsNode.find("DrainageNetworks")
+            if dnNode is None:
+                dnNode = ET.SubElement(inputsNode, "DrainageNetworks")
+            networkNode = ET.SubElement(dnNode, "Network")
+            if name is not '':
+                nameNode = ET.SubElement(networkNode, "Name")
+                nameNode.text = str(name)
+            if path is not '':
+                pathNode = ET.SubElement(networkNode, "Path")
+                pathNode.text = str(path)
+            if project is not '':
+                projectNode = ET.SubElement(networkNode, "Project")
+                projectNode.text = str(project)
+            if iid is not '':
+                networkNode.set('id', iid)
+            if guid is not '':
+                networkNode.set('guid', guid)
+            if ref is not '':
+                networkNode.set('ref', ref)
+        if type == 'Thiessen Polygons':
+            dnNode = inputsNode.find("DrainageNetworks")
+            if dnNode is None:
+                dnNode = ET.SubElement(inputsNode, "DrainageNetworks")
+            networkNode = dnNode.find("Network")
+            if networkNode is None:
+                networkNode = ET.SubElement(dnNode, "Network")
+            thiessenNode = ET.SubElement(networkNode, "ThiessenPolygons")
+            if name is not '':
+                nameNode = ET.SubElement(thiessenNode, "Name")
+                nameNode.text = str(name)
+            if path is not '':
+                pathNode = ET.SubElement(thiessenNode, "Path")
+                pathNode.text = str(path)
+            if project is not '':
+                projectNode = ET.SubElement(thiessenNode, "Project")
+                projectNode.text = str(project)
+            if iid is not '':
+                thiessenNode.set('id', iid)
+            if guid is not '':
+                thiessenNode.set('guid', guid)
+            if ref is not '':
+                thiessenNode.set('ref', ref)
+        if type == 'Valley':
+            vbNode = inputsNode.find("ValleyBottom")
+            if vbNode is None:
+                vbNode = ET.SubElement(inputsNode, "ValleyBottom")
+            if name is not '':
+                nameNode = ET.SubElement(vbNode, "Name")
+                nameNode.text = str(name)
+            if path is not '':
+                pathNode = ET.SubElement(vbNode, "Path")
+                pathNode.text = str(path)
+            if project is not '':
+                projectNode = ET.SubElement(vbNode, "Project")
+                projectNode.text = str(project)
+            if iid is not '':
+                vbNode.set('id', iid)
+            if guid is not '':
+                vbNode.set('guid', guid)
+            if ref is not '':
+                vbNode.set('ref', ref)
+        if type == 'LRP':
+            lrpNode = inputsNode.find("LargeRiverPolygon")
+            if lrpNode is None:
+                lrpNode = ET.SubElement(inputsNode, "LargeRiverPolygon")
+            if name is not '':
+                nameNode = ET.SubElement(lrpNode, "Name")
+                nameNode.text = str(name)
+            if path is not '':
+                pathNode = ET.SubElement(lrpNode, "Path")
+                pathNode.text = str(path)
+            if project is not '':
+                projectNode = ET.SubElement(lrpNode, "Project")
+                projectNode.text = str(project)
+            if iid is not '':
+                lrpNode.set('id', iid)
+            if guid is not '':
+                lrpNode.set('guid', guid)
+            if ref is not '':
+                lrpNode.set('ref', ref)
+
     def addParameter(self, name, value, parentNode):
         """adds parameter tags to the project xml document"""
         paramNode = parentNode.find("Parameters")
@@ -221,23 +392,34 @@ class ProjectXML:
             node.set('guid', guid)
         nameNode = ET.SubElement(node, "Name")
         nameNode.text = str(name)
-
         self.VBETrealizations.append(node)
 
-    def addRVDRealization(self, name, id):  # will need to update like VBET
+    def addRVDRealization(self, name, promoted='', dateCreated='', productVersion='', guid=''):
         """adds an RVD realization tag to the project xml document"""
         node = ET.SubElement(self.realizations, "RVD")
-        node.set("id", str(id))
-        node.set("Guid", self.getUUID())
+        if promoted is not '':
+            node.set('promoted', promoted)
+        if dateCreated is not '':
+            node.set('dateCreated', dateCreated)
+        if productVersion is not '':
+            node.set('productVersion', productVersion)
+        if guid is not '':
+            node.set('guid', guid)
         nameNode = ET.SubElement(node, "Name")
         nameNode.text = str(name)
         self.RVDrealizations.append(node)
 
-    def addRCARealization(self, name, id):  # will need to update like VBET
+    def addRCARealization(self, name, promoted='', dateCreated='', productVersion='', guid=''):
         """adds an RCA realization tag to the project xml document"""
         node = ET.SubElement(self.realizations, "RCA")
-        node.set("id", str(id))
-        node.set("Guid", self.getUUID())
+        if promoted is not '':
+            node.set('promoted', promoted)
+        if dateCreated is not '':
+            node.set('dateCreated', dateCreated)
+        if productVersion is not '':
+            node.set('productVersion', productVersion)
+        if guid is not '':
+            node.set('guid', guid)
         nameNode = ET.SubElement(node, "Name")
         nameNode.text = str(name)
         self.RCArealizations.append(node)
