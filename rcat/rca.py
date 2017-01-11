@@ -34,11 +34,13 @@ class RCAproject:
 
         newxml = ProjectXML(self.xmlpath, self.ToolName, self.projectName)
 
-        if not self.hucid == '':
-            newxml.addMeta('HUCID', self.hucid, newxml.project)
-        newxml.addMeta('Region', 'CRB', newxml.project)
-        if not self.hucname == '':
-            newxml.addMeta('Watershed', self.hucname, newxml.project)
+        if not self.hucid == "":
+            newxml.addMeta("HUCID", self.hucid, newxml.project)
+        idlist = [int(x) for x in str(self.hucid)]
+        if idlist[0] == 1 and idlist[1] == 7:
+            newxml.addMeta("Region", "CRB", newxml.project)
+        if not self.hucname == "":
+            newxml.addMeta("Watershed", self.hucname, newxml.project)
 
         rguid = self.getUUID()
         newxml.addRCARealization('RCA Realization 1', dateCreated=self.time.strftime('%Y-%m-%d %H:%M:%S'), guid=rguid)

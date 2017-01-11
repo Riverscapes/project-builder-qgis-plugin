@@ -49,7 +49,7 @@ class VBETproject:
 
         if not self.huc_id == "":
             newxml.addMeta("HUCID", self.huc_id, newxml.project)
-        idlist = [int(x) for x in str(self.hucID)]
+        idlist = [int(x) for x in str(self.huc_id)]
         if idlist[0] == 1 and idlist[1] == 7:
             newxml.addMeta("Region", "CRB", newxml.project)
         if not self.huc_name == "":
@@ -135,8 +135,8 @@ class VBETproject:
         inNetwork = ogr.GetDriverByName("ESRI Shapefile").Open(network_path)
         ogr.GetDriverByName("ESRI Shapefile").CopyDataSource(inNetwork, network_copy)
 
-        newxml.addProjectInput("Vector", "Drainage Network", network_copy, iid="DN01", guid=rguid)
-        newxml.addVBETInput(newxml.VBETrealizations[0], "Network", ref="DN01")
+        newxml.addProjectInput("Vector", "Drainage Network", network_copy, iid="DN1", guid=rguid)
+        newxml.addVBETInput(newxml.VBETrealizations[0], "Network", ref="DN1")
 
         output_edited_copy = "02_Analyses/Output_1/" + os.path.basename(output_edited_path)
         inOutput_edited = ogr.GetDriverByName("ESRI Shapefile").Open(output_edited_path)
