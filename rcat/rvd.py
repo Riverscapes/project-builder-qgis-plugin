@@ -42,13 +42,11 @@ class RVDproject:
         if not self.hucname == "":
             newxml.addMeta("Watershed", self.hucname, newxml.project)
 
-        rguid = self.getUUID()
         newxml.addRVDRealization('RVD Realization 1', dateCreated=self.time.strftime('%Y-%m-%d %H:%M:%S'),
-                                 productVersion=self.ToolVersion, guid=rguid)
+                                 productVersion=self.ToolVersion, guid=self.getUUID())
 
         self.set_structure(projPath)
-        self.copy_datasets(projPath, ex_veg, hist_veg, network, valleybottom, rvd, conversion, lrp, thiessen, newxml,
-                           rguid)
+        self.copy_datasets(projPath, ex_veg, hist_veg, network, valleybottom, rvd, conversion, lrp, thiessen, newxml)
 
         newxml.write()
 
@@ -89,54 +87,43 @@ class RVDproject:
         os.mkdir('Outputs_001')
         os.chdir(projPath)
 
-    def copy_datasets(self, projPath, ex_veg, hist_veg, network, valleybottom, rvd, conversion, lrp, thiessen, newxml,
-                      rguid):
+    def copy_datasets(self, projPath, ex_veg, hist_veg, network, valleybottom, rvd, conversion, lrp, thiessen, newxml):
         """Copies the existing data sets used to run RVD into the RVD project structure"""
 
         if os.getcwd() is not projPath:
             os.chdir(projPath)
 
         shutil.copytree(ex_veg, '01_Inputs/01_Ex_Veg/Ex_Veg_001/' + os.path.basename(ex_veg))
-        #ex_veg_copy = '01_Inputs/01_Ex_Veg/Ex_Veg_001/' + os.path.basename(ex_veg)
-        #inEx_veg = gdal.Open(ex_veg)
-        #driver = gdal.GetDriverByName('AAIGrid')
-        #driver.CreateCopy(ex_veg_copy, inEx_veg)
-        #src = os.path.dirname(ex_veg) + '/vat.adf'
-        #shutil.copy(src, os.path.dirname(ex_veg_copy))
 
         exvegpath = '01_Inputs/01_Ex_Veg/Ex_Veg_001/' + os.path.basename(ex_veg)
-        newxml.addProjectInput("Raster", "Existing Vegetation", str(exvegpath), iid='EXVEG1', guid=rguid)
+        newxml.addProjectInput("Raster", "Existing Vegetation", str(exvegpath), iid='EXVEG1', guid=self.getUUID())
         newxml.addRVDInput(newxml.RVDrealizations[0], "Existing Vegetation", ref='EXVEG1')
 
         shutil.copytree(hist_veg, '01_Inputs/02_Hist_Veg/Hist_Veg_001/' + os.path.basename(hist_veg))
-        #hist_veg_copy = '01_Inputs/02_Hist_Veg/Hist_Veg_001/' + os.path.basename(hist_veg)
-        #inHist_veg = gdal.Open(hist_veg)
-        #driver = gdal.GetDriverByName('AAIGrid')
-        #driver.CreateCopy(hist_veg_copy, inHist_veg)
 
         histvegpath = '01_Inputs/02_Hist_Veg/Hist_Veg_001/' + os.path.basename(hist_veg)
-        newxml.addProjectInput("Raster", "Historic Vegetation", str(histvegpath), iid='HISTVEG1', guid=rguid)
+        newxml.addProjectInput("Raster", "Historic Vegetation", str(histvegpath), iid='HISTVEG1', guid=self.getUUID())
         newxml.addRVDInput(newxml.RVDrealizations[0], "Historic Vegetation", ref='HISTVEG1')
 
         network_copy = '01_Inputs/03_Network/Network_001/' + os.path.basename(network)
         inNetwork = ogr.GetDriverByName('ESRI Shapefile').Open(network)
         ogr.GetDriverByName('ESRI Shapefile').CopyDataSource(inNetwork, network_copy)
 
-        newxml.addProjectInput("Vector", "Network", network_copy, iid='DN01', guid=rguid)
+        newxml.addProjectInput("Vector", "Network", network_copy, iid='DN01', guid=self.getUUID())
         newxml.addRVDInput(newxml.RVDrealizations[0], "Network", ref='DN01')
 
         valleybottom_copy = '01_Inputs/04_Valley/Valley_001/' + os.path.basename(valleybottom)
         inValleybottom = ogr.GetDriverByName('ESRI Shapefile').Open(valleybottom)
         ogr.GetDriverByName('ESRI Shapefile').CopyDataSource(inValleybottom, valleybottom_copy)
 
-        newxml.addProjectInput("Vector", "Valley Bottom", valleybottom_copy, iid="VALLEY1", guid=rguid)
+        newxml.addProjectInput("Vector", "Valley Bottom", valleybottom_copy, iid="VALLEY1", guid=self.getUUID())
         newxml.addRVDInput(newxml.RVDrealizations[0], "Valley", ref='VALLEY1')
 
         rvd_copy = '02_Analyses/Outputs_001/' + os.path.basename(rvd)
         inRvd = ogr.GetDriverByName('ESRI Shapefile').Open(rvd)
         ogr.GetDriverByName('ESRI Shapefile').CopyDataSource(inRvd, rvd_copy)
 
-        newxml.addOutput("Analysis1", "Vector", "RVD1", rvd_copy, newxml.RVDrealizations[0])
+        newxml.addOutput("Analysis1", "Vector", "RVD1", rvd_copy, newxml.RVDrealizations[0], guid=self.getUUID())
 
         if not conversion == '':
             conversion_copy = '02_Analyses/Outputs_001/' + os.path.basename(conversion)
@@ -144,14 +131,15 @@ class RVDproject:
             driver = gdal.GetDriverByName('GTiff')
             driver.CreateCopy(conversion_copy, inConversion)
 
-            newxml.addOutput("Analysis1", "Raster", "Conversion1", conversion_copy, newxml.RVDrealizations[0])
+            newxml.addOutput("Analysis1", "Raster", "Conversion1", conversion_copy, newxml.RVDrealizations[0],
+                             guid=self.getUUID())
 
         if not lrp == '':
             lrp_copy = '01_Inputs/05_LRP/LRP_001/' + os.path.basename(lrp)
             inLrp = ogr.GetDriverByName('ESRI Shapefile').Open(lrp)
             ogr.GetDriverByName('ESRI Shapefile').CopyDataSource(inLrp, lrp_copy)
 
-            newxml.addProjectInput("Vector", "Large River Polygon", lrp_copy, iid='LRP1', guid=rguid)
+            newxml.addProjectInput("Vector", "Large River Polygon", lrp_copy, iid='LRP1', guid=self.getUUID())
             newxml.addRVDInput(newxml.RVDrealizations[0], "LRP", ref='LRP1')
 
         if not thiessen == '':
@@ -160,7 +148,7 @@ class RVDproject:
             ogr.GetDriverByName('ESRI Shapefile').CopyDataSource(inThiessen, thiessen_copy)
 
             newxml.addRVDInput(newxml.RVDrealizations[0], "Thiessen Polygons", name="Thiessen Polygons",
-                               path=thiessen_copy, guid=rguid)
+                               path=thiessen_copy, guid=self.getUUID())
 
     def getUUID(self):
         return str(uuid.uuid4()).upper()

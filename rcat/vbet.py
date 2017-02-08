@@ -55,9 +55,8 @@ class VBETproject:
         if not self.huc_name == "":
             newxml.addMeta("Watershed", self.huc_name, newxml.project)
 
-        rguid = self.getUUID()
         newxml.addVBETRealization("VBET Realization 1", dateCreated=self.time.strftime("%Y-%m-%d %H:%M:%S"),
-                                  productVersion=self.ToolVersion, guid=rguid)
+                                  productVersion=self.ToolVersion, guid=self.getUUID())
 
         if not self.smbuf == "":
             newxml.addParameter("sm_buf", self.smbuf, newxml.VBETrealizations[0])
@@ -77,7 +76,7 @@ class VBETproject:
             newxml.addParameter("sm_slope", self.smslope, newxml.VBETrealizations[0])
 
         self.set_structure(projPath)
-        self.copy_datasets(projPath, dem, network, output_edited, flow, slope, output_unedited, newxml, rguid)
+        self.copy_datasets(projPath, dem, network, output_edited, flow, slope, output_unedited, newxml)
 
         newxml.write()
 
@@ -109,7 +108,7 @@ class VBETproject:
         os.chdir(proj_path)
 
     def copy_datasets(self, proj_path, dem_path, network_path, output_edited_path, flow_path, slope_path,
-                      output_unedited_path, newxml, rguid):
+                      output_unedited_path, newxml):
         """Copies the existing data sets used to run V-BET into the V-BET project structure"""
 
         if os.getcwd() is not proj_path:
@@ -128,14 +127,14 @@ class VBETproject:
             raise Exception("input DEM is not type .tif or .img")
         del fname, fext
 
-        newxml.addProjectInput("DEM", "DEM", dem_copy, iid="DEM1", guid=rguid)
+        newxml.addProjectInput("DEM", "DEM", dem_copy, iid="DEM1", guid=self.getUUID())
         newxml.addVBETInput(newxml.VBETrealizations[0], "DEM", ref="DEM1")
 
         network_copy = "01_Inputs/02_Network/Network_1/" + os.path.basename(network_path)
         inNetwork = ogr.GetDriverByName("ESRI Shapefile").Open(network_path)
         ogr.GetDriverByName("ESRI Shapefile").CopyDataSource(inNetwork, network_copy)
 
-        newxml.addProjectInput("Vector", "Drainage Network", network_copy, iid="DN1", guid=rguid)
+        newxml.addProjectInput("Vector", "Drainage Network", network_copy, iid="DN1", guid=self.getUUID())
         newxml.addVBETInput(newxml.VBETrealizations[0], "Network", ref="DN1")
 
         output_edited_copy = "02_Analyses/Output_1/" + os.path.basename(output_edited_path)
@@ -158,7 +157,8 @@ class VBETproject:
                 raise Exception("drainage area raster is not type .tif or .img")
             del fname, fext
 
-            newxml.addVBETInput(newxml.VBETrealizations[0], "Flow", name="Drainage Area", path=flow_copy, guid=rguid)
+            newxml.addVBETInput(newxml.VBETrealizations[0], "Flow", name="Drainage Area", path=flow_copy,
+                                guid=self.getUUID())
 
         if not slope_path == "":
             fname, fext = os.path.splitext(slope_path)
@@ -173,7 +173,7 @@ class VBETproject:
             else:
                 raise Exception("slope raster is not type .tif or .img")
 
-            newxml.addVBETInput(newxml.VBETrealizations[0], "Slope", name="Slope", path=slope_copy, guid=rguid)
+            newxml.addVBETInput(newxml.VBETrealizations[0], "Slope", name="Slope", path=slope_copy, guid=self.getUUID())
 
         if not output_unedited_path == "":
             output_unedited_copy = "02_Analyses/Output_1/" + os.path.basename(output_unedited_path)
@@ -181,7 +181,7 @@ class VBETproject:
             ogr.GetDriverByName("ESRI Shapefile").CopyDataSource(inOutput_unedited, output_unedited_copy)
 
             newxml.addOutput("Analysis1", "Vector", "Unedited Valley Bottom", output_unedited_copy,
-                             newxml.VBETrealizations[0])
+                             newxml.VBETrealizations[0], guid=self.getUUID())
 
     def getUUID(self):
         return str(uuid.uuid4()).upper()

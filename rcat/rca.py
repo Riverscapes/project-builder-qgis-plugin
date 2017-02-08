@@ -42,14 +42,14 @@ class RCAproject:
         if not self.hucname == "":
             newxml.addMeta("Watershed", self.hucname, newxml.project)
 
-        rguid = self.getUUID()
-        newxml.addRCARealization('RCA Realization 1', dateCreated=self.time.strftime('%Y-%m-%d %H:%M:%S'), guid=rguid)
+        newxml.addRCARealization('RCA Realization 1', dateCreated=self.time.strftime('%Y-%m-%d %H:%M:%S'),
+                                 guid=self.getUUID())
 
         if not self.width_thresh == '':
             newxml.addParameter("width_thresh", self.width_thresh, newxml.RCArealizations[0])
 
         self.set_structure(projPath)
-        self.copy_datasets(projPath, ex_veg, hist_veg, network, frag_valley, rca, lrp, thiessen, newxml, rguid)
+        self.copy_datasets(projPath, ex_veg, hist_veg, network, frag_valley, rca, lrp, thiessen, newxml)
 
         newxml.write()
 
@@ -91,7 +91,7 @@ class RCAproject:
         os.mkdir('Outputs_001')
         os.chdir(projPath)
 
-    def copy_datasets(self, projPath, ex_veg, hist_veg, network, frag_valley, rca, lrp, thiessen, newxml, rguid):
+    def copy_datasets(self, projPath, ex_veg, hist_veg, network, frag_valley, rca, lrp, thiessen, newxml):
         """Copies the existing data sets used to run RVD into the RCA project structure"""
 
         if os.getcwd() is not projPath:
@@ -100,41 +100,41 @@ class RCAproject:
         exvegpath = '01_Inputs/01_Ex_Veg/Ex_Veg_001/' + os.path.basename(ex_veg)
         shutil.copytree(ex_veg, exvegpath)
 
-        newxml.addProjectInput("Raster", "Existing Vegetation", str(exvegpath), iid='EXVEG1', guid=rguid)
+        newxml.addProjectInput("Raster", "Existing Vegetation", str(exvegpath), iid='EXVEG1', guid=self.getUUID())
         newxml.addRCAInput(newxml.RCArealizations[0], "Existing Vegetation", ref='EXVEG1')
 
         histvegpath = '01_Inputs/02_Hist_Veg/Hist_Veg_001/' + os.path.basename(hist_veg)
         shutil.copytree(hist_veg, histvegpath)
 
-        newxml.addProjectInput("Raster", "Historic Vegetation", str(histvegpath), iid='HISTVEG1', guid=rguid)
+        newxml.addProjectInput("Raster", "Historic Vegetation", str(histvegpath), iid='HISTVEG1', guid=self.getUUID())
         newxml.addRCAInput(newxml.RCArealizations[0], "Historic Vegetation", ref='HISTVEG1')
 
         network_copy = '01_Inputs/03_Network/Network_001/' + os.path.basename(network)
         inNetwork = ogr.GetDriverByName('ESRI Shapefile').Open(network)
         ogr.GetDriverByName('ESRI Shapefile').CopyDataSource(inNetwork, network_copy)
 
-        newxml.addProjectInput("Vector", "Drainage Network", network_copy, iid='DN01', guid=rguid)
+        newxml.addProjectInput("Vector", "Drainage Network", network_copy, iid='DN01', guid=self.getUUID())
         newxml.addRCAInput(newxml.RCArealizations[0], "Network", ref='DN01')
 
         frag_valley_copy = '01_Inputs/04_Valley/Valley_001/' + os.path.basename(frag_valley)
         inFragValley = ogr.GetDriverByName('ESRI Shapefile').Open(frag_valley)
         ogr.GetDriverByName('ESRI Shapefile').CopyDataSource(inFragValley, frag_valley_copy)
 
-        newxml.addProjectInput("Vector", "Fragmented Valley Bottom", frag_valley_copy, iid='FVB1', guid=rguid)
+        newxml.addProjectInput("Vector", "Fragmented Valley Bottom", frag_valley_copy, iid='FVB1', guid=self.getUUID())
         newxml.addRCAInput(newxml.RCArealizations[0], "Fragmented Valley", ref='FVB1')
 
         rca_copy = '02_Analyses/Outputs_001/' + os.path.basename(rca)
         inRca = ogr.GetDriverByName('ESRI Shapefile').Open(rca)
         ogr.GetDriverByName('ESRI Shapefile').CopyDataSource(inRca, rca_copy)
 
-        newxml.addOutput("Analysis1", "Vector", "RCA1", rca_copy, newxml.RCArealizations[0])
+        newxml.addOutput("Analysis1", "Vector", "RCA1", rca_copy, newxml.RCArealizations[0], guid=self.getUUID())
 
         if not lrp == '':
             lrp_copy = '01_Inputs/05_LRP/LRP_001/' + os.path.basename(lrp)
             inLrp = ogr.GetDriverByName('ESRI Shapefile').Open(lrp)
             ogr.GetDriverByName('ESRI Shapefile').CopyDataSource(inLrp, lrp_copy)
 
-            newxml.addProjectInput("Vector", "Large River Polygon", lrp_copy, iid='LRP1', guid=rguid)
+            newxml.addProjectInput("Vector", "Large River Polygon", lrp_copy, iid='LRP1', guid=self.getUUID())
             newxml.addRCAInput(newxml.RCArealizations[0], "LRP", ref='LRP1')
 
         if not thiessen == '':
@@ -143,7 +143,7 @@ class RCAproject:
             ogr.GetDriverByName('ESRI Shapefile').CopyDataSource(inThiessen, thiessen_copy)
 
             newxml.addRCAInput(newxml.RCArealizations[0], "Thiessen Polygons", name="Thiessen Polygons",
-                               path=thiessen_copy, guid=rguid)
+                               path=thiessen_copy, guid=self.getUUID())
 
     def getUUID(self):
         return str(uuid.uuid4()).upper()
