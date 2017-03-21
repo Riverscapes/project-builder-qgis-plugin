@@ -28,6 +28,7 @@ class ProjectXML:
         self.projectType.text = projType
 
         # Add some containers we will fill out later
+        self.meta = ET.SubElement(self.project, "MetaData")
         self.Inputs = ET.SubElement(self.project, "Inputs")
         self.realizations = ET.SubElement(self.project, "Realizations")
         self.VBETrealizations = []
@@ -348,7 +349,7 @@ class ProjectXML:
         inputsNode = parentNode.find("Inputs")
         if inputsNode is None:
             inputsNode = ET.SubElement(parentNode, "Inputs")
-        if type == "Existing Vegetation":
+        if type == "Existing Cover":
             exNode = inputsNode.find("ExistingVegetation")
             if exNode is None:
                 exNode = ET.SubElement(inputsNode, "ExistingVegetation")
@@ -367,7 +368,7 @@ class ProjectXML:
                 exNode.set("guid", guid)
             if ref is not "":
                 exNode.set("ref", ref)
-        if type == "Historic Vegetation":
+        if type == "Historic Cover":
             histNode = inputsNode.find("HistoricVegetation")
             if histNode is None:
                 histNode = ET.SubElement(inputsNode, "HistoricVegetation")
@@ -526,9 +527,12 @@ class ProjectXML:
 
     def addOutput(self, aname, otype, name, path, parentNode, project="", oid="", guid="", ref=""):
         """adds an output tag to an analysis tag in the project xml document"""
-        analysisNode = parentNode.find("Analysis")
+        analysesNode = parentNode.find("Analyses")
+        if analysesNode is None:
+            analysesNode = ET.SubElement(parentNode, "Analyses")
+        analysisNode = analysesNode.find("Analysis")
         if analysisNode is None:
-            analysisNode = ET.SubElement(parentNode, "Analysis")
+            analysisNode = ET.SubElement(analysesNode, "Analysis")
             ET.SubElement(analysisNode, "Name").text = str(aname)
         outputsNode = analysisNode.find("Outputs")
         if outputsNode is None:
@@ -550,9 +554,11 @@ class ProjectXML:
             projectNode = ET.SubElement(typeNode, "Project")
             projectNode.text = str(project)
 
-    def addVBETRealization(self, name, promoted='', dateCreated='', productVersion='', guid=''):
+    def addVBETRealization(self, name, rid="", promoted="", dateCreated="", productVersion="", guid=""):
         """adds a VBET realization tag to the project xml document"""
         node = ET.SubElement(self.realizations, "VBET")
+        if rid is not "":
+            node.set("id", rid)
         if promoted is not "":
             node.set("promoted", promoted)
         if dateCreated is not "":
@@ -565,9 +571,11 @@ class ProjectXML:
         nameNode.text = str(name)
         self.VBETrealizations.append(node)
 
-    def addRVDRealization(self, name, promoted="", dateCreated="", productVersion="", guid=""):
+    def addRVDRealization(self, name, rid="", promoted="", dateCreated="", productVersion="", guid=""):
         """adds an RVD realization tag to the project xml document"""
         node = ET.SubElement(self.realizations, "RVD")
+        if rid is not "":
+            node.set("id", rid)
         if promoted is not "":
             node.set("promoted", promoted)
         if dateCreated is not "":
@@ -580,9 +588,11 @@ class ProjectXML:
         nameNode.text = str(name)
         self.RVDrealizations.append(node)
 
-    def addRCARealization(self, name, promoted="", dateCreated="", productVersion="", guid=""):
+    def addRCARealization(self, name, rid="", promoted="", dateCreated="", productVersion="", guid=""):
         """adds an RCA realization tag to the project xml document"""
         node = ET.SubElement(self.realizations, "RCA")
+        if rid is not "":
+            node.set("id", rid)
         if promoted is not "":
             node.set("promoted", promoted)
         if dateCreated is not "":

@@ -39,7 +39,7 @@ class VBETproject:
         self.medslope = medslope
         self.smslope = smslope
 
-        self.xmlpath = self.proj_path + "/vbet.xml"
+        self.xmlpath = self.proj_path + "/project.rs.xml"
 
         # check that project doesn't already exist/folder structure isn't already created
         if os.path.exists(self.proj_path + "/01_Inputs"):
@@ -55,7 +55,7 @@ class VBETproject:
         if not self.huc_name == "":
             newxml.addMeta("Watershed", self.huc_name, newxml.project)
 
-        newxml.addVBETRealization("VBET Realization 1", dateCreated=self.time.strftime("%Y-%m-%d %H:%M:%S"),
+        newxml.addVBETRealization("VBET Realization 1", rid="RZ1", dateCreated=self.time.strftime("%Y-%m-%d %H:%M:%S"),
                                   productVersion=self.ToolVersion, guid=self.getUUID())
 
         if not self.smbuf == "":
@@ -141,7 +141,8 @@ class VBETproject:
         inOutput_edited = ogr.GetDriverByName("ESRI Shapefile").Open(output_edited_path)
         ogr.GetDriverByName("ESRI Shapefile").CopyDataSource(inOutput_edited, output_edited_copy)
 
-        newxml.addOutput("Analysis1", "Vector", "Edited Valley Bottom", output_edited_copy, newxml.VBETrealizations[0])
+        newxml.addOutput("Analysis 1", "Vector", "Edited Valley Bottom", output_edited_copy, newxml.VBETrealizations[0],
+                         guid=self.getUUID())
 
         if not flow_path == "":
             fname, fext = os.path.splitext(flow_path)
